@@ -36,7 +36,11 @@ pipeline {
       steps {
         // Runs qemu container to enable building of arm images on x86_64
         sh 'docker run --rm --privileged multiarch/qemu-user-static:register --reset'
-        sh 'docker build -t ${TEST_IMAGE_ARM} -f DockerfileARM .'
+		script {
+		  docker.withRegistry("https://reg.ifddev.com", "docker-registry-credential") {
+            sh 'docker build -t ${TEST_IMAGE_ARM} -f DockerfileARM .'
+		  }
+		}
       }
     }
 
@@ -54,7 +58,11 @@ pipeline {
 
     stage('Push image') {
       steps {
-        sh 'docker push ${PROD_IMAGE_ARM}'
+	    script {
+	      docker.withRegistry("https://reg.ifddev.com", "docker-registry-credential") {
+            sh 'docker push ${PROD_IMAGE_ARM}'
+		  }
+		}
       }
     }
   }
