@@ -65,5 +65,10 @@ pipeline {
 		}
       }
     }
+    stage('Deleting created images in jenkins') {
+      steps {	
+	sh "docker rmi -f ${TEST_IMAGE_ARM} ${PROD_IMAGE_ARM}"
+      }
+    }
   }
 }
