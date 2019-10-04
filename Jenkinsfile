@@ -7,12 +7,7 @@ Date 31/01/2018
 */
 
 pipeline {
-  agent {
-    node {
-      label 'docker-builder'
-    }
-  }
-
+  agent any
   environment {
       TEST_IMAGE_ARM = 'reg.ifddev.com/arm/openresty:test'
       PROD_IMAGE_ARM = 'reg.ifddev.com/arm/openresty:latest'
